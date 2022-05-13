@@ -12,16 +12,16 @@ public class app
                    60000,60000,60000,80000,80000,80000,100000,0};      
     int[] slot ={2,2,3,4,5,6,6,7,7,8,8,9,9,9,10,10,10,11,11,11,
                  12,12,12,13,13,14,14,15,15,16,16,16,17,17,17,17,18,18,18,18};
-    int option,currentLevel,currentExperience,desiredLevel,desiredExperience,boxcost,experience,boxcount,totalWaru,
-        boxcount_with_yeti,boxcount_with_no_yeti,final_level_with_yeti,final_level_with_no_yeti,exp_with_yeti,
-        exp_with_no_yeti,excessExp_with_yeti,excessExp_with_no_yeti;
-    double btime; 
+    int option,currentLevel,desiredLevel,final_level_with_yeti,final_level_with_no_yeti;
+    double boxcost,boxcount,totalWaru,boxcount_with_yeti,boxcount_with_no_yeti,exp_with_yeti,
+        exp_with_no_yeti,excessExp_with_yeti,excessExp_with_no_yeti,currentExperience,desiredExperience,experience,btime;
     boolean Inplay = true;
     while(Inplay)
     {
       clearScreen();
-      option=currentLevel=desiredLevel=experience=boxcount_with_yeti=boxcount_with_no_yeti=
-      final_level_with_yeti=final_level_with_no_yeti=exp_with_yeti=
+      option=currentLevel=desiredLevel=final_level_with_yeti=final_level_with_no_yeti=0;
+      
+      experience=boxcount_with_yeti=boxcount_with_no_yeti=exp_with_yeti=
       exp_with_no_yeti=excessExp_with_yeti=excessExp_with_no_yeti=0;    
            
       currentExperience=desiredExperience=totalWaru=boxcost=boxcount=-1;
@@ -52,19 +52,19 @@ public class app
                while(currentExperience<0 || currentExperience>=level[currentLevel-1])
                {
                  System.out.print("Current EXP: ");
-                 currentExperience = UserInput.nextInt();
+                 currentExperience = UserInput.nextDouble();
                  UserInput.nextLine();
                }
                while(totalWaru<0)
                {
                  System.out.print("Current Waru: ");
-                 totalWaru = UserInput.nextInt();
+                 totalWaru = UserInput.nextDouble();
                  UserInput.nextLine();
               }   
                while(boxcost<0)
                {
                  System.out.print("C Box Cost: ");
-                 boxcost = UserInput.nextInt();
+                 boxcost = UserInput.nextDouble();
                  UserInput.nextLine();
                }
                while(btime<0)
@@ -73,7 +73,7 @@ public class app
                  btime = UserInput.nextDouble();
                  UserInput.nextLine();
                }
-               boxcount = totalWaru/boxcost;
+               boxcount = Math.ceil(totalWaru/boxcost);
                exp_with_yeti = boxcount*45;
                exp_with_no_yeti = boxcount*30;
                final_level_with_yeti = currentLevel;
@@ -133,7 +133,7 @@ public class app
                while(currentExperience<0 || currentExperience>=level[currentLevel-1])
                {
                  System.out.print("Current EXP: ");
-                 currentExperience = UserInput.nextInt();
+                 currentExperience = UserInput.nextDouble();
                  UserInput.nextLine();
                }
                while(desiredLevel<1 || desiredLevel>40 || desiredLevel< currentLevel)
@@ -145,13 +145,13 @@ public class app
                while(desiredExperience<0 || desiredExperience>level[desiredLevel-1])
                {
                  System.out.print("Desired EXP: ");
-                 desiredExperience = UserInput.nextInt();
+                 desiredExperience = UserInput.nextDouble();
                  UserInput.nextLine();
                }
                while(boxcost<0)
                {
                 System.out.print("C Box Cost: ");
-                boxcost = UserInput.nextInt();
+                boxcost = UserInput.nextDouble();
                 UserInput.nextLine();
                }
                while(btime<0)
@@ -166,8 +166,8 @@ public class app
                  experience += level[i];
                }
                experience = experience - currentExperience + desiredExperience;
-               boxcount_with_yeti = experience/45;
-               boxcount_with_no_yeti = experience/30;
+               boxcount_with_yeti =  Math.ceil(experience/45);
+               boxcount_with_no_yeti =  Math.ceil(experience/30);
                System.out.println();
                System.out.println(String.format("Total Experience to gain: %,d",experience));
                
@@ -193,7 +193,7 @@ public class app
                 while(boxcost<0)
                 {
                  System.out.print("C Box Cost: ");
-                 boxcost = UserInput.nextInt();
+                 boxcost = UserInput.nextDouble();
                  UserInput.nextLine();
                 }
                 System.out.println("Resize the command prompt to fullscreen to see full table properly");
@@ -201,14 +201,15 @@ public class app
                 System.out.print("Number of C box(with Yeti)\tNumber of C box(with no Yeti)\t");
                 System.out.print("Time Taken(with Yeti)\tTime Taken(with no Yeti)\t");
                 System.out.println("Total cost(with Yeti)\tTotal cost(with no Yeti)");
+                
                 for(int i=0;i<40;i++)
                 {
                   System.out.print(String.format("%10d\t\t%14d\t\t%5d\t",(i+1),level[i],slot[i])); //10%d for padding to the right
-                  System.out.print(String.format("%26d\t\t\t\t%5d\t",level[i]/45,level[i]/30)); 
+                  System.out.print(String.format("%26.0f\t\t\t\t%5.0f\t", Math.ceil((double)level[i]/45.0), Math.ceil((double)level[i]/30))); 
                   timerformattable(level[i]/45,btime);
                   System.out.print("\t   ");
                   timerformattable(level[i]/30,btime);
-                  System.out.print(String.format("\t\t%,13d\t\t%,16d",(level[i]/45)*boxcost,(level[i]/30)*boxcost));
+                  System.out.print(String.format("\t\t%,13.0f\t\t%,16.0f",(level[i]/45)*boxcost,(level[i]/30)*boxcost));
                   System.out.println();
                 }
                 break;
@@ -224,7 +225,7 @@ public class app
      }
     }      
   }
-  public static void timer(int numBox,double boxtime) // tell user time left till program ends
+  public static void timer(double numBox,double boxtime) // tell user time left till program ends
   {
     double dtotal= numBox;
     double time = dtotal*boxtime; // 1 box 3.5s
@@ -233,7 +234,7 @@ public class app
     int sec = (int)(time%3600)%60;
     System.out.print(String.format("%dhr %dmin %ds",hr,min,sec));
   }
-  public static void timerformattable(int numBox,double boxtime) // tell user time left till program ends
+  public static void timerformattable(double numBox,double boxtime) // tell user time left till program ends
   {
     double dtotal= numBox;
     double time = dtotal*boxtime; // 1 box 3.5s
