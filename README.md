@@ -23,6 +23,6 @@ Inputs:<br/>
 Outputs:<br/>
 ![image](https://user-images.githubusercontent.com/51332449/168336797-6acd8320-949d-475c-844d-36f142530e52.png)
 
-
+## Option 4: Exit Program
 
 
