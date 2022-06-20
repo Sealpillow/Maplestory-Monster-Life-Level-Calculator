@@ -1,4 +1,4 @@
-# Maplestory-Monster-Life-Level-Calculator
+# Maplestory Monster Life Level Calculator
 ![image](https://user-images.githubusercontent.com/51332449/168339433-ea7c5b43-a466-4e00-9ada-25e9453be252.png)<br/>
 
 Hi! I created this program so that anyone can calculate the amount of waru/time needed to level<br/>
